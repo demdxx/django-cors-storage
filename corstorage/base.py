@@ -4,16 +4,20 @@ class Record(object):
     """
     Item record
     """
-    def __init__(self):
-        self.__dict = {}
+    def __init__(self,key,value):
+        self.__dict = dict(value) if value else {}
+        self._key = key
         self._modified = False
+    
+    def __eq__(self,key):
+        return self._key == key
     
     def __setitem__(self, key, value):
         self.__dict[key] = value
         self._modified = True
 
     def __getitem__(self,key):
-        return self.__dict.get(key)
+        return self.__dict[key] if key in self.__dict else None
 
     def modified(self,m):
         self._modified = m
@@ -39,4 +43,7 @@ class Record(object):
         return self
 
     def pop(self,key,value=None):
+        """
+        Get value and remove key
+        """
         return self.pop(key,value)

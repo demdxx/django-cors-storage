@@ -6,7 +6,7 @@ from django.conf import settings
 
 CORS_STORAGE_CACHE = getattr(settings,'CORS_STORAGE_CACHE','default')
 
-class Cache(object):
+class Backend(object):
     def __init__(self):
         self._cache = get_cache( CORS_STORAGE_CACHE )
     
@@ -18,7 +18,7 @@ class Cache(object):
         return None
     
     def set(self,key,value):
-        self._cache.set(key,simplejson.dumps(value))
+        self._cache.set(key,simplejson.dumps(value),-1)
 
     def delete(self,key):
         self._cache.delete(key)
